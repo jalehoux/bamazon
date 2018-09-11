@@ -17,7 +17,6 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
-    getInventory();
 });
 
 function getInventory() {
@@ -33,8 +32,8 @@ function getInventory() {
             console.log(`Item ID:  ${data[i].item_id}\nProduct Name: ${data[i].product_name}\nDepartment: ${data[i].department_name}\nPrice: ${data[i].price}\n`);
             console.log("---------------------------------------------------------------------\n");
 		}
-    })
-    promptPurchase();
+		promptPurchase()
+	})
 }
 
 function promptPurchase() {
@@ -64,13 +63,13 @@ function promptPurchase() {
 			if (err) throw err;
 
 			if (data.length === 0) {
-				console.log('ERROR: Invalid Item ID. Please select a valid Item ID.');
+				console.log('ERROR: Invalid Item ID. Enter Correct ID.  CLI Terminated');
 				connection.end();
 
 			} else {
 				var productData = data[0];
 				if (quantity <= productData.stock_quantity) {
-					console.log('Congratulations, the product you requested is in stock! Placing order!');
+					console.log('The product you requested is in stock! Placing order!');
 
 					// Construct the updating query string
 					var updateQueryStr = 'UPDATE products SET stock_quantity = ' + (productData.stock_quantity - quantity) + ' WHERE item_id = ' + item;
@@ -89,7 +88,7 @@ function promptPurchase() {
 					})
 				} else {
 					console.log('Sorry, there is not enough product in stock, your order can not be placed as is.');
-					console.log('Please modify your order.');
+					console.log('Please modify your order.  Connection Ended');
 					console.log("\n---------------------------------------------------------------------\n");
 
 					connection.end();
@@ -98,3 +97,5 @@ function promptPurchase() {
 		})
 	})
 }
+
+getInventory();
