@@ -14,4 +14,8 @@ First git clone this repository.  In order to run this application, you should h
 
 ### Usage
 
+node bamazonCustomer.js
+
+A list of all products will appear and a question asking which product.
+Put the number of the item you want and the amount.
 
